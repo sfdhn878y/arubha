@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Placement Portal</title>
+</head>
+
+<body style="margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+
+    <!-- Header -->
+    <div style="background: linear-gradient(90deg, #ff6b6b, #f7d794); padding:15px; color:white;">
+        
+        <span style="font-size:20px; font-weight:bold;">
+            <a href="{{ url_for('index') }}" 
+               style="color:white; text-decoration:none;">
+               Placement Portal
+            </a>
+        </span>
+
+        <span style="float:right;">
+
+            {% if session.get("user_id") %}
+                
+                <!-- if logged in -->
+
+                {% if session.get("role") == "admin" %}
+                    <a href="/admin_dashboard" style="color:red; margin-right:15px; font-weight:bold;">
+                        Dashboard
+                    </a>
+
+                {% elif session.get("role") == "student" %}
+                    <a href="/student_dashboard" style="color:red; margin-right:15px; font-weight:bold;">
+                        Dashboard
+                    </a>
+
+                {% elif session.get("role") == "company" %}
+                    <a href="/company_dashboard" style="color:red; margin-right:15px; font-weight:bold;">
+                        Dashboard
+                    </a>
+                {% endif %}
+
+                <a href="/logout" style="color:red; font-weight:bold;">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <!-- if not logged in -->
+
+                <a href="{{ url_for('login') }}" 
+                   style="color:red; margin-right:15px; font-weight:bold;">
+                   Login
+                </a>
+
+                <a href="{{ url_for('register') }}" 
+                   style="color:red; font-weight:bold;">
+                   Register
+                </a>
+
+            {% endif %}
+
+        </span>
+
+        <div style="clear:both;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="padding:20px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

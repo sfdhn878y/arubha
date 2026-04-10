@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.container {
+    width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    color: white;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    margin: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.danger {
+    background: #ef4444;
+    color: white;
+}
+
+.safe {
+    background: #22c55e;
+    color: black;
+}
+</style>
+
+<div class="container">
+    <div class="card">
+
+        <h2>⚠ Warning</h2>
+
+        <p>
+            This job has <b>{{ application_count }}</b> application(s).
+        </p>
+
+        <p>
+            If you delete this job, all applications will also be removed.
+        </p>
+
+        <form action="/confirm-delete/{{ job.id }}" method="POST" style="display:inline;">
+            <button class="btn danger">Yes, Delete Anyway</button>
+        </form>
+
+        <a href="/company_dashboard">
+            <button class="btn safe">Cancel</button>
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

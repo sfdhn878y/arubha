@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.container {
+    width: 70%;
+    margin: auto;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.title {
+    margin-top: 20px;
+}
+</style>
+
+<div class="container">
+
+<h2 class="title">Job Details</h2>
+
+<div class="card">
+    <p><b>Job Type:</b> {{ job.job_type }}</p>
+    <p><b>Stipend:</b> {{ job.stipend }}</p>
+    <p><b>Last Date:</b> {{ job.last_date_to_apply }}</p>
+
+    <p>
+        <b>Status:</b>
+        {% if job.is_closed %}
+            Closed
+        {% else %}
+            Active
+        {% endif %}
+    </p>
+
+    <p>
+        <b>Admin Approval:</b>
+        {% if job.is_approved %}
+            Approved
+        {% else %}
+            Pending
+        {% endif %}
+    </p>
+</div>
+
+
+<h2 class="title">Company Details</h2>
+
+<div class="card">
+    <p><b>Name:</b> {{ company.company_name }}</p>
+    <p><b>Email:</b> {{ company.company_email }}</p>
+    <p><b>Contact:</b> {{ company.contact_number }}</p>
+    <p><b>City:</b> {{ company.city_name }}</p>
+    <p><b>Established:</b> {{ company.established_year }}</p>
+</div>
+
+
+<h2 class="title">Student Applications</h2>
+
+{% if applications %}
+    {% for app in applications %}
+    <div class="card">
+        <p><b>Name:</b> {{ app.student.user.name }}</p>
+        <p><b>Email:</b> {{ app.student.user.email }}</p>
+        <p><b>Branch:</b> {{ app.student.branch }}</p>
+        <p><b>CGPA:</b> {{ app.student.cgpa }}</p>
+        <p><b>Status:</b> {{ app.current_status }}</p>
+        <p><b>Applied On:</b> {{ app.date_submitted.strftime("%d-%m-%Y") }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No students applied yet.</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

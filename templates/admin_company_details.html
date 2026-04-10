@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Company Details{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>{{ company.company_name }}</h2>
+
+    <p><b>Email:</b> {{ company.company_email }}</p>
+    <p><b>City:</b> {{ company.city_name }}</p>
+    <p><b>Contact:</b> {{ company.contact_number }}</p>
+    <p><b>Established:</b> {{ company.established_year }}</p>
+
+    <h3>Jobs Posted</h3>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Job Type</th>
+            <th>Stipend</th>
+            <th>Status</th>
+        </tr>
+
+        {% for job in jobs %}
+
+        <tr>
+
+            <td>{{ job.id }}</td>
+            <td>{{ job.job_type }}</td>
+            <td>{{ job.stipend }}</td>
+
+            <td>
+
+                {% if job.is_closed %}
+                Closed
+                {% elif job.is_approved %}
+                Approved
+                {% else %}
+                Pending
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

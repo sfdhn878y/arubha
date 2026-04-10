@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #dbeafe, #e0f2fe);
+            margin: 0;
+        }
+
+        .box {
+            width: 420px;
+            margin: 80px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 5px rgba(37, 99, 235, 0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Student Profile</h2>
+
+    <form method="POST">
+
+        <input type="text"
+               name="branch"
+               value="{{ student.branch if student else '' }}"
+               placeholder="Branch"
+               required>
+
+        <input type="number"
+               step="0.01"
+               name="cgpa"
+               value="{{ student.cgpa if student else '' }}"
+               placeholder="CGPA"
+               required>
+
+        <input type="text"
+               name="skills"
+               value="{{ student.skills if student else '' }}"
+               placeholder="Skills (Python, ML, etc)">
+
+        <button type="submit">Save Profile</button>
+
+    </form>
+</div>
+
+</body>
+</html>

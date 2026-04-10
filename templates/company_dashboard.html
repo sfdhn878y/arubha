@@ -1,0 +1,466 @@
+{% extends "base.html" %}
+{% block title %}Company Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+    /* ===== Google Font Import ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Syne:wght@700;800&display=swap');
+
+    /* ===== Page Background ===== */
+    .dash-page {
+        min-height: 100vh;
+        background: #fef9f0;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    /* ===== Top Bar ===== */
+    .top-bar {
+        background: #ffffff;
+        border-bottom: 2px solid #ffe8c2;
+        padding: 14px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-text {
+        font-family: 'Syne', sans-serif;
+        font-size: 20px;
+        font-weight: 800;
+        color: #d97706;
+        text-decoration: none;
+    }
+
+    .logo-dot { color: #f59e0b; }
+
+    .top-bar-right {
+        font-size: 13px;
+        color: #78716c;
+        font-weight: 600;
+    }
+
+    /* ===== Main Content ===== */
+    .dash-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 36px 24px;
+    }
+
+    /* ===== Page Header ===== */
+    .page-header {
+        margin-bottom: 32px;
+    }
+
+    .page-header .page-badge {
+        display: inline-block;
+        background: #fff7ed;
+        color: #92400e;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 50px;
+        border: 1px solid #fde68a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+
+    .page-header h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: 30px;
+        font-weight: 800;
+        color: #1c1917;
+        margin: 0;
+    }
+
+    /* ===== Section Cards ===== */
+    .section-card {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 2px solid #f5f5f4;
+        padding: 28px 24px;
+        margin-bottom: 24px;
+    }
+
+    .section-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .section-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: #1c1917;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title img {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* ===== Profile Info Grid ===== */
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .profile-field {
+        background: #fafaf9;
+        border-radius: 12px;
+        border: 2px solid #f5f5f4;
+        padding: 12px 16px;
+    }
+
+    .profile-field .field-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #a8a29e;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .profile-field .field-value {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1c1917;
+    }
+
+    .incomplete-msg {
+        font-size: 14px;
+        color: #dc2626;
+        font-weight: 600;
+        background: #fef2f2;
+        border: 2px solid #fecaca;
+        border-radius: 12px;
+        padding: 12px 16px;
+        margin-bottom: 16px;
+    }
+
+    /* ===== Buttons ===== */
+    .btn {
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-primary {
+        background: #d97706;
+        color: #fff;
+    }
+    .btn-primary:hover { background: #b45309; }
+
+    .btn-success {
+        background: #fff7ed;
+        color: #92400e;
+        border: 2px solid #fde68a;
+    }
+    .btn-success:hover { background: #fef3c7; }
+
+    .btn-danger {
+        background: #fef2f2;
+        color: #dc2626;
+        border: 2px solid #fecaca;
+    }
+    .btn-danger:hover { background: #fee2e2; }
+
+    .btn-outline {
+        background: transparent;
+        color: #d97706;
+        border: 2px solid #d97706;
+    }
+    .btn-outline:hover { background: #fff7ed; }
+
+    /* ===== Tables ===== */
+    .table-wrap {
+        overflow-x: auto;
+        border-radius: 14px;
+        border: 2px solid #f5f5f4;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead tr {
+        background: #fff7ed;
+    }
+
+    th {
+        padding: 12px 16px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #92400e;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 13px 16px;
+        font-size: 14px;
+        color: #44403c;
+        border-top: 1px solid #f5f5f4;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fafaf9;
+    }
+
+    .empty-row td {
+        text-align: center;
+        color: #a8a29e;
+        padding: 28px;
+        font-size: 14px;
+    }
+
+    /* ===== Badges ===== */
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .badge-approved { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge-pending  { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-active   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .badge-closed   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+    /* ===== Action Buttons in Table ===== */
+    .action-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 640px) {
+        .dash-container { padding: 24px 16px; }
+        .page-header h1 { font-size: 24px; }
+        .section-card { padding: 20px 16px; }
+    }
+</style>
+
+<div class="dash-page">
+
+    <!-- Top Bar -->
+    <nav class="top-bar">
+        <a href="/" class="logo-text">Place<span class="logo-dot">●</span>Mate</a>
+        <div class="top-bar-right">Company Dashboard</div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="dash-container">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-badge">Recruiter View</div>
+            <h1>Company Dashboard</h1>
+        </div>
+
+        <!-- ===== COMPANY PROFILE CARD ===== -->
+        <div class="section-card">
+            <div class="section-card-header">
+                <div class="section-title">
+                    <img src="https://img.icons8.com/ios-filled/50/d97706/company.png" alt="Profile">
+                    Company Profile
+                </div>
+                <a href="/company_profile" class="btn btn-outline">Edit Profile</a>
+            </div>
+
+            {% if company %}
+                <div class="profile-grid">
+                    <div class="profile-field">
+                        <div class="field-label">Company Name</div>
+                        <div class="field-value">{{ company.company_name }}</div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="field-label">Email</div>
+                        <div class="field-value">{{ company.company_email }}</div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="field-label">City</div>
+                        <div class="field-value">{{ company.city_name }}</div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="field-label">Contact</div>
+                        <div class="field-value">{{ company.contact_number }}</div>
+                    </div>
+                    <div class="profile-field">
+                        <div class="field-label">Established</div>
+                        <div class="field-value">{{ company.established_year }}</div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="incomplete-msg">
+                    Profile incomplete — please fill in your company details.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- ===== SHORTLISTED STUDENTS CARD ===== -->
+        <div class="section-card">
+            <div class="section-card-header">
+                <div class="section-title">
+                    <img src="https://img.icons8.com/ios-filled/50/d97706/star.png" alt="Shortlisted">
+                    Shortlisted Students
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in shortlisted %}
+                        <tr>
+                            <td>{{ app.student.user.name }}</td>
+                            <td>{{ app.student.user.email }}</td>
+                            <td>
+                                <a href="/toggle-status/{{app.id}}/shortlist" class="btn btn-danger">Remove</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr class="empty-row">
+                            <td colspan="3">No shortlisted students yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== SELECTED STUDENTS CARD ===== -->
+        <div class="section-card">
+            <div class="section-card-header">
+                <div class="section-title">
+                    <img src="https://img.icons8.com/ios-filled/50/d97706/checked-user-male.png" alt="Selected">
+                    Selected Students
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in selected %}
+                        <tr>
+                            <td>{{ app.student.user.name }}</td>
+                            <td>{{ app.student.user.email }}</td>
+                            <td>
+                                <a href="/toggle-status/{{app.id}}/select" class="btn btn-danger">Remove</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr class="empty-row">
+                            <td colspan="3">No selected students yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== JOB POSTS CARD ===== -->
+        <div class="section-card">
+            <div class="section-card-header">
+                <div class="section-title">
+                    <img src="https://img.icons8.com/ios-filled/50/d97706/briefcase.png" alt="Jobs">
+                    Job Posts
+                </div>
+                <a href="/post-job" class="btn btn-primary">+ Post New Job</a>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job Type</th>
+                            <th>Stipend</th>
+                            <th>Last Date</th>
+                            <th>Apps</th>
+                            <th>Admin</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in jobs %}
+                        {% set job = item.job %}
+                        <tr>
+                            <td><b>{{ job.job_type }}</b></td>
+                            <td>{{ job.stipend }}</td>
+                            <td>{{ job.last_date_to_apply }}</td>
+                            <td>{{ item.total_apps }}</td>
+
+                            <td>
+                                {% if job.is_approved %}
+                                    <span class="badge badge-approved">Approved</span>
+                                {% else %}
+                                    <span class="badge badge-pending">Pending</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if job.is_closed %}
+                                    <span class="badge badge-closed">Closed</span>
+                                {% else %}
+                                    <span class="badge badge-active">Active</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="action-group">
+                                    <a href="/job-applications/{{job.id}}" class="btn btn-primary">View</a>
+                                    <a href="/edit-job/{{job.id}}" class="btn btn-success">Edit</a>
+                                    <form action="/delete-job/{{job.id}}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

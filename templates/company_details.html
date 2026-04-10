@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Company Details{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>{{ company.company_name }}</h2>
+
+    <div class="card">
+
+        <p><b>Email:</b> {{ company.company_email }}</p>
+        <p><b>City:</b> {{ company.city_name }}</p>
+        <p><b>Contact:</b> {{ company.contact_number }}</p>
+        <p><b>Established:</b> {{ company.established_year }}</p>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

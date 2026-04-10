@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}All Companies{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>All Companies</h2>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for c in companies %}
+
+        <tr>
+
+            <td>{{ c.user.name }}</td>
+            <td>{{ c.company_email }}</td>
+
+            <td>
+                {% if c.user.is_active %}
+                <span class="active">Active</span>
+                {% else %}
+                <span class="blacklisted">Blacklisted</span>
+                {% endif %}
+            </td>
+
+            <td>
+
+                <a href="/admin/company/{{c.user.id}}">View</a>
+
+                {% if c.user.is_active %}
+                |
+                <a class="reject" href="/admin/company/{{c.user.id}}/blacklist">Blacklist</a>
+                {% else %}
+                |
+                <a class="approve" href="/admin/company/{{c.user.id}}/unblacklist">Unblacklist</a>
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

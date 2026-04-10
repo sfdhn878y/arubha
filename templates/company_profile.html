@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Profile</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1e293b;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 90px;
+            resize: none;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2> Company Profile</h2>
+
+    <form action="/company_profile" method="POST">
+
+    <input type="text" name="company_name" placeholder="Company Name" required>
+
+    <input type="email" name="company_email" placeholder="Company Email" required>
+
+    <input type="text" name="contact_number" placeholder="Contact Number" required>
+
+    <input type="text" name="city_name" placeholder="City" required>
+
+    <input type="number" name="established_year" placeholder="Established Year" required>
+
+    <button type="submit">Save Profile</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

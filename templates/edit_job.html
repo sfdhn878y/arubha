@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .container {
+        width: 500px;
+        margin: 40px auto;
+        font-family: Arial;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        background: #3498db;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Edit Job</h2>
+
+        <form method="POST">
+
+            <label>Job Type</label>
+            <input type="text" name="job_type" value="{{ job.job_type }}">
+
+            <label>Stipend</label>
+            <input type="text" name="stipend" value="{{ job.stipend }}">
+
+            <label>Last Date</label>
+            <input type="date" name="last_date_to_apply" value="{{ job.last_date_to_apply }}">
+
+            <br>
+
+            <button class="btn">Update Job</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

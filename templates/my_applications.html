@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .container {
+        width: 800px;
+        margin: 40px auto;
+        font-family: Arial;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+        color: #1e3a8a;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .back {
+        padding: 8px 14px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="container">
+
+    <h2>My Applications</h2>
+
+    <br>
+
+    {% if applications %}
+
+    {% for app in applications %}
+
+    <div class="card">
+
+        <p><b>Company:</b> {{ app.job.company.company_name }}</p>
+
+        <p><b>Job Type:</b> {{ app.job.job_type }}</p>
+
+        <p><b>Stipend:</b> ₹ {{ app.job.stipend }}</p>
+
+        <p><b>Applied On:</b>
+            {{ app.date_submitted.strftime("%d %b %Y") }}
+        </p>
+
+
+        <p><b>Status:</b>
+
+            <span class="status">
+
+                {% if app.current_status == "Pending" %}
+                <span style="color:#38bdf8;">Pending</span>
+
+                {% elif app.current_status == "Shortlisted" %}
+                <span style="color:#facc15;">Shortlisted</span>
+
+                {% elif app.current_status == "Selected" %}
+                <span style="color:#22c55e;">Selected</span>
+
+                {% else %}
+                <span style="color:#ef4444;">Rejected</span>
+                {% endif %}
+
+            </span>
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <p>No applications yet.</p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="/student_dashboard">
+        <button class="back">Back to Dashboard</button>
+    </a>
+
+</div>
+
+{% endblock %}

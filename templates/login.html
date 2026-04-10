@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* ===== Google Font Import ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Syne:wght@700;800&display=swap');
+
+    /* ===== Page Background ===== */
+    .login-page {
+        min-height: 100vh;
+        background: #fef9f0;
+        font-family: 'Nunito', sans-serif;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ===== Top Bar ===== */
+    .top-bar {
+        background: #ffffff;
+        border-bottom: 2px solid #ffe8c2;
+        padding: 14px 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-text {
+        font-family: 'Syne', sans-serif;
+        font-size: 20px;
+        font-weight: 800;
+        color: #d97706;
+        text-decoration: none;
+    }
+
+    .logo-dot {
+        color: #f59e0b;
+    }
+
+    /* ===== Main Content Area ===== */
+    .login-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        gap: 60px;
+        flex-wrap: wrap;
+    }
+
+    /* ===== Left Side Illustration ===== */
+    .login-left {
+        max-width: 380px;
+        flex: 1;
+        min-width: 240px;
+    }
+
+    .login-left img {
+        width: 100%;
+        border-radius: 20px;
+        object-fit: cover;
+        height: 340px;
+        border: 4px solid #ffe8c2;
+        display: block;
+    }
+
+    .login-left .welcome-text {
+        margin-top: 20px;
+    }
+
+    .login-left h2 {
+        font-family: 'Syne', sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        color: #1c1917;
+        margin-bottom: 8px;
+    }
+
+    .login-left p {
+        font-size: 14px;
+        color: #78716c;
+        line-height: 1.65;
+    }
+
+    /* ===== Login Card ===== */
+    .login-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 36px 32px;
+        border: 2px solid #f5f5f4;
+        width: 100%;
+        max-width: 380px;
+        flex-shrink: 0;
+    }
+
+    .card-badge {
+        display: inline-block;
+        background: #fff7ed;
+        color: #92400e;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 50px;
+        border: 1px solid #fde68a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+
+    .card-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        color: #1c1917;
+        margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+        font-size: 14px;
+        color: #78716c;
+        margin-bottom: 28px;
+    }
+
+    /* ===== Form Fields ===== */
+    .field-group {
+        margin-bottom: 18px;
+    }
+
+    .field-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #44403c;
+        margin-bottom: 7px;
+    }
+
+    .field-group input {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 12px;
+        border: 2px solid #e7e5e4;
+        font-family: 'Nunito', sans-serif;
+        font-size: 14px;
+        color: #1c1917;
+        background: #fafaf9;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+        outline: none;
+    }
+
+    .field-group input:focus {
+        border-color: #d97706;
+        background: #fff;
+    }
+
+    /* ===== Submit Button ===== */
+    .submit-btn {
+        width: 100%;
+        padding: 13px;
+        border-radius: 50px;
+        background: #d97706;
+        color: #fff;
+        font-family: 'Nunito', sans-serif;
+        font-size: 15px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+        background: #b45309;
+    }
+
+    /* ===== Divider ===== */
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .divider-line {
+        flex: 1;
+        height: 1px;
+        background: #e7e5e4;
+    }
+
+    .divider-text {
+        font-size: 12px;
+        color: #a8a29e;
+        font-weight: 600;
+    }
+
+    /* ===== Footer Link ===== */
+    .card-footer {
+        text-align: center;
+        font-size: 13px;
+        color: #78716c;
+    }
+
+    .card-footer a {
+        color: #d97706;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .card-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 640px) {
+        .login-left { display: none; }
+        .login-card { padding: 28px 22px; }
+        .card-title { font-size: 22px; }
+    }
+</style>
+
+<div class="login-page">
+
+    <!-- Top Bar -->
+    <nav class="top-bar">
+        <a href="{{ url_for('index') }}" class="logo-text">Place<span class="logo-dot">●</span>Mate</a>
+    </nav>
+
+    <!-- Main Body -->
+    <div class="login-body">
+
+        <!-- Left Side Image + Text -->
+        <div class="login-left">
+            <img
+                src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80"
+                alt="Student studying on campus"
+            >
+            <div class="welcome-text">
+                <h2>Welcome back!</h2>
+                <p>Sign in to access your dashboard, track applications, and discover new opportunities waiting for you.</p>
+            </div>
+        </div>
+
+        <!-- Login Card -->
+        <div class="login-card">
+
+            <div class="card-badge">Student / Recruiter / Admin</div>
+            <div class="card-title">Sign In</div>
+            <div class="card-subtitle">Enter your details to continue</div>
+
+            <!-- Login Form — method and names unchanged -->
+            <form method="POST">
+
+                <div class="field-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign In to PlaceMate</button>
+
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">New here?</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="card-footer">
+                Don't have an account?
+                <a href="{{ url_for('register') }}">Create one for free</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

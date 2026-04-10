@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Student Details{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>{{ user.name }}</h2>
+
+    <p><b>Email:</b> {{ user.email }}</p>
+    <p><b>Branch:</b> {{ student.branch }}</p>
+    <p><b>CGPA:</b> {{ student.cgpa }}</p>
+    <p><b>Skills:</b> {{ student.skills }}</p>
+
+    <h3>Applications</h3>
+
+    <table>
+
+        <tr>
+            <th>Job</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+
+        {% for app in applications %}
+
+        <tr>
+
+            <td>{{ app.job.job_type }}</td>
+            <td>{{ app.current_status }}</td>
+            <td>{{ app.date_submitted }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

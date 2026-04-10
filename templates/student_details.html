@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Profile</title>
+
+<style>
+
+body{
+    background: linear-gradient(120deg,#f8fbff,#e0f2fe);
+    color:#1e293b;
+    font-family: Verdana,sans-serif;
+    padding:30px;
+}
+
+/* PROFILE CARD */
+
+.profile-card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    max-width:500px;
+    margin:auto;
+    border:1px solid #e2e8f0;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+
+h1{
+    color:#2563eb;
+    margin-bottom:20px;
+    font-size:26px;
+    text-align:center;
+}
+
+/* STUDENT INFO */
+
+.info{
+    margin:10px 0;
+    font-size:16px;
+    padding:8px 0;
+    border-bottom:1px solid #f1f5f9;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+    display:block;
+    width:fit-content;
+    text-align:center;
+    margin:25px auto 0;
+    background:#22c55e;
+    color:white;
+    padding:10px 16px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:#16a34a;
+    transform:scale(1.05);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="profile-card">
+
+<h1>Student Profile</h1>
+
+<div class="info"><strong>Name:</strong> {{ student.user.name }}</div>
+<div class="info"><strong>Email:</strong> {{ student.user.email }}</div>
+<div class="info"><strong>Branch:</strong> {{ student.branch }}</div>
+<div class="info"><strong>CGPA:</strong> {{ student.cgpa }}</div>
+<div class="info"><strong>Skills:</strong> {{ student.skills }}</div>
+
+<a href="/company_dashboard" class="back-btn">
+← Back to Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

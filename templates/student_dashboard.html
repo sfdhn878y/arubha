@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background: linear-gradient(to right, #eef2ff, #e0f2fe);
+        font-family: Arial;
+    }
+
+    .container {
+        width: 800px;
+        margin: 40px auto;
+    }
+
+    .card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+        color: #1e3a8a;
+    }
+
+    p {
+        margin: 6px 0;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .primary {
+        background: #2563eb;
+        color: white;
+    }
+
+    .primary:hover {
+        background: #1d4ed8;
+    }
+
+    .apply {
+        background: #16a34a;
+        color: white;
+    }
+
+    .apply:hover {
+        background: #15803d;
+    }
+
+    .disabled {
+        background: gray;
+        color: white;
+    }
+
+    .view {
+        background: #f59e0b;
+        color: white;
+    }
+
+    .view:hover {
+        background: #d97706;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .search-box input {
+        padding: 10px;
+        width: 70%;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .search-box button {
+        margin-left: 10px;
+    }
+</style>
+
+
+<div class="container">
+
+  
+
+    <!-- SEARCH BAR -->
+
+    <div class="card search-box">
+
+        <form method="GET" action="/student_dashboard">
+
+            <input type="text" name="search" placeholder="Search job by company, type, skills..."
+                value="{{ request.args.get('search','') }}">
+
+            <button class="btn primary">
+                Search
+            </button>
+
+            <a href="/student_dashboard">
+                <button type="button" class="btn view">
+                    Clear
+                </button>
+            </a>
+
+        </form>
+
+    </div>
+
+    <!-- PROFILE SECTION -->
+
+    <div class="card">
+
+        <h2>Student Profile</h2>
+
+        {% if student %}
+
+        <p><b>Branch:</b> {{ student.branch }}</p>
+        <p><b>CGPA:</b> {{ student.cgpa }}</p>
+        <p><b>Skills:</b> {{ student.skills }}</p>
+
+        {% else %}
+
+        <p style="color:orange;">Profile Incomplete</p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/student_profile">
+            <button class="btn primary">
+                Complete / Edit Profile
+            </button>
+        </a>
+
+    </div>
+
+
+    <!-- APPLICATION HISTORY -->
+
+    <a href="/my-applications">
+        <button class="btn view">
+            View Application History
+        </button>
+    </a>
+
+    <br><br>
+
+
+    <!-- JOB SECTION -->
+
+    <h2>Available Jobs</h2>
+
+    {% if jobs %}
+
+    {% for job in jobs %}
+
+    <div class="card">
+
+        <p><b>Company:</b> {{ job.company.company_name }}</p>
+        <p><b>Job Type:</b> {{ job.job_type }}</p>
+        <p><b>Stipend:</b> ₹ {{ job.stipend }}</p>
+        <p><b>Last Date:</b> {{ job.last_date_to_apply.strftime("%d %b %Y") }}</p>
+
+        <br>
+
+
+        {% if job.id in applied_jobs_dict %}
+
+        {% set app = applied_jobs_dict[job.id] %}
+
+        <button class="btn disabled" disabled>
+            Applied ✓
+        </button>
+
+        <p><b>Status:</b>
+            <span class="status">
+
+                {% if app.current_status == "Pending" %}
+                <span style="color:#38bdf8;">Pending</span>
+
+                {% elif app.current_status == "Shortlisted" %}
+                <span style="color:#facc15;">Shortlisted</span>
+
+                {% elif app.current_status == "Selected" %}
+                <span style="color:#22c55e;">Selected</span>
+
+                {% else %}
+                <span style="color:#ef4444;">Rejected</span>
+                {% endif %}
+
+            </span>
+        </p>
+
+        <p><b>Applied On:</b>
+            {{ app.date_submitted.strftime("%d %b %Y") }}
+        </p>
+
+        {% else %}
+
+        <a href="/apply-job/{{ job.id }}">
+            <button class="btn apply">
+                Apply Job
+            </button>
+        </a>
+
+        {% endif %}
+
+
+        <br><br>
+
+
+        <!-- COMPANY DETAILS -->
+
+        <a href="/company-details/{{ job.company.id }}">
+            <button class="btn view">
+                View Company Details
+            </button>
+        </a>
+
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <p>No jobs available right now.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

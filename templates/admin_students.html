@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}All Students{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>All Students</h2>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for s in students %}
+
+        <tr>
+
+            <td>{{ s.name }}</td>
+            <td>{{ s.email }}</td>
+
+            <td>
+
+                {% if s.is_active %}
+                <span class="active">Active</span>
+                {% else %}
+                <span class="blacklisted">Blacklisted</span>
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                <a href="/admin/student/{{s.id}}">View</a>
+
+                {% if s.is_active %}
+                |
+                <a class="reject" href="/admin/student/{{s.id}}/blacklist">Blacklist</a>
+                {% else %}
+                |
+                <a class="approve" href="/admin/student/{{s.id}}/unblacklist">Unblacklist</a>
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

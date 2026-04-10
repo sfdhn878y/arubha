@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Job Applications{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Applications for {{ job.job_type }}</h2>
+
+    <table>
+
+        <tr>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+
+        {% for app in applications %}
+
+        <tr>
+
+            <td>{{ app.student.user.name }}</td>
+            <td>{{ app.current_status }}</td>
+            <td>{{ app.date_submitted }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

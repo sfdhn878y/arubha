@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #fafafa;
+        font-family: Arial;
+    }
+
+    .page {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .box {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .small-box {
+        background: #f0f0f0;
+        padding: 15px;
+        width: 23%;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+
+    .small-box h2 {
+        margin: 0;
+        font-size: 22px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    th {
+        background: #e0e0e0;
+    }
+
+    .btn {
+        padding: 5px 8px;
+        border: 1px solid #333;
+        background: white;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 12px;
+        margin: 2px;
+        display: inline-block;
+    }
+
+    .green { color: green; }
+    .red { color: red; }
+    .orange { color: orange; }
+
+    .search input {
+        padding: 6px;
+        width: 200px;
+    }
+
+</style>
+
+<div class="page">
+
+    <h1>Admin Dashboard</h1>
+
+    <!-- SIMPLE STATS -->
+    <div class="row">
+
+        <div class="small-box">
+            <h2>{{ total_students }}</h2>
+            <p>Students</p>
+        </div>
+
+        <div class="small-box">
+            <h2>{{ total_companies }}</h2>
+            <p>Companies</p>
+        </div>
+
+        <div class="small-box">
+            <h2>{{ total_jobs }}</h2>
+            <p>Jobs</p>
+        </div>
+
+        <div class="small-box">
+            <h2>{{ total_applications }}</h2>
+            <p>Applications</p>
+        </div>
+
+    </div>
+
+    <!-- PENDING COMPANIES -->
+    <div class="box">
+        <h3>Pending Companies</h3>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+
+            {% for c in pending_companies %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.email }}</td>
+                <td>
+                    <a class="btn" href="/admin/company/{{c.id}}/approve">Approve</a>
+                    <a class="btn" href="/admin/company/{{c.id}}/reject">Reject</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No data</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- PENDING JOBS -->
+    <div class="box">
+        <h3>Pending Jobs</h3>
+
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Action</th>
+            </tr>
+
+            {% for j in pending_jobs %}
+            <tr>
+                <td>{{ j.job_type }}</td>
+                <td>{{ j.company.company_name }}</td>
+                <td>
+                    <a class="btn" href="/admin/job/{{j.id}}/approve">Approve</a>
+                    <a class="btn" href="/admin/job/{{j.id}}/reject">Reject</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No jobs</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ALL COMPANIES -->
+    <div class="box">
+        <h3>All Companies</h3>
+
+        <div class="search">
+            <form method="GET" action="/admin_dashboard">
+                <input type="text" name="company_search" placeholder="Search company">
+                <button class="btn" type="submit">Search</button>
+            </form>
+        </div>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for c in all_companies %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.email }}</td>
+
+                <td>
+                    {% if c.is_active %}
+                        <span class="green">Active</span>
+                    {% else %}
+                        <span class="red">Blocked</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a class="btn" href="/admin/company/{{c.id}}">View</a>
+
+                    {% if c.is_active %}
+                        <a class="btn" href="/admin/company/{{c.id}}/blacklist">Block</a>
+                    {% else %}
+                        <a class="btn" href="/admin/company/{{c.id}}/unblacklist">Unblock</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ALL STUDENTS -->
+    <div class="box">
+        <h3>All Students</h3>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for s in all_students %}
+            <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.email }}</td>
+
+                <td>
+                    {% if s.is_active %}
+                        <span class="green">Active</span>
+                    {% else %}
+                        <span class="red">Blocked</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a class="btn" href="/admin/student/{{s.id}}">View</a>
+
+                    {% if s.is_active %}
+                        <a class="btn" href="/admin/student/{{s.id}}/blacklist">Block</a>
+                    {% else %}
+                        <a class="btn" href="/admin/student/{{s.id}}/unblacklist">Unblock</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ALL JOBS -->
+    <div class="box">
+        <h3>All Jobs</h3>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Applications</th>
+            </tr>
+
+            {% for job in all_jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.job_type }}</td>
+                <td>{{ job.company.company_name }}</td>
+
+                <td>
+                 
+                    {% if job.is_closed %}
+                        <span class="red">Closed</span>
+                    {% elif job.is_approved %}
+                        <span class="green">Approved</span>
+                    {% else %}
+                        <span class="orange">Pending</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ job.applications|length }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

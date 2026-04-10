@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* ===== Google Font Import ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Syne:wght@700;800&display=swap');
+
+    /* ===== Page Background ===== */
+    .register-page {
+        min-height: 100vh;
+        background: #fef9f0;
+        font-family: 'Nunito', sans-serif;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ===== Top Bar ===== */
+    .top-bar {
+        background: #ffffff;
+        border-bottom: 2px solid #ffe8c2;
+        padding: 14px 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-text {
+        font-family: 'Syne', sans-serif;
+        font-size: 20px;
+        font-weight: 800;
+        color: #d97706;
+        text-decoration: none;
+    }
+
+    .logo-dot {
+        color: #f59e0b;
+    }
+
+    /* ===== Main Body ===== */
+    .register-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        gap: 60px;
+        flex-wrap: wrap;
+    }
+
+    /* ===== Register Card ===== */
+    .register-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 36px 32px;
+        border: 2px solid #f5f5f4;
+        width: 100%;
+        max-width: 420px;
+        flex-shrink: 0;
+    }
+
+    .card-badge {
+        display: inline-block;
+        background: #fff7ed;
+        color: #92400e;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 50px;
+        border: 1px solid #fde68a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+
+    .card-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        color: #1c1917;
+        margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+        font-size: 14px;
+        color: #78716c;
+        margin-bottom: 28px;
+    }
+
+    /* ===== Form Fields ===== */
+    .field-group {
+        margin-bottom: 18px;
+    }
+
+    .field-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #44403c;
+        margin-bottom: 7px;
+    }
+
+    .field-group input,
+    .field-group select {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 12px;
+        border: 2px solid #e7e5e4;
+        font-family: 'Nunito', sans-serif;
+        font-size: 14px;
+        color: #1c1917;
+        background: #fafaf9;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus {
+        border-color: #d97706;
+        background: #fff;
+    }
+
+    /* ===== Role Selector Cards ===== */
+    .role-selector {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 4px;
+    }
+
+    .role-option input[type="radio"] {
+        display: none;
+    }
+
+    .role-option label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 12px 8px;
+        border-radius: 14px;
+        border: 2px solid #e7e5e4;
+        background: #fafaf9;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 700;
+        color: #78716c;
+        text-align: center;
+        transition: all 0.2s;
+        margin-bottom: 0;
+    }
+
+    .role-option label img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .role-option input[type="radio"]:checked + label {
+        border-color: #d97706;
+        background: #fff7ed;
+        color: #92400e;
+    }
+
+    .role-option label:hover {
+        border-color: #fbbf24;
+    }
+
+    /* ===== Submit Button ===== */
+    .submit-btn {
+        width: 100%;
+        padding: 13px;
+        border-radius: 50px;
+        background: #d97706;
+        color: #fff;
+        font-family: 'Nunito', sans-serif;
+        font-size: 15px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+        background: #b45309;
+    }
+
+    /* ===== Divider ===== */
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .divider-line {
+        flex: 1;
+        height: 1px;
+        background: #e7e5e4;
+    }
+
+    .divider-text {
+        font-size: 12px;
+        color: #a8a29e;
+        font-weight: 600;
+    }
+
+    /* ===== Footer Link ===== */
+    .card-footer {
+        text-align: center;
+        font-size: 13px;
+        color: #78716c;
+    }
+
+    .card-footer a {
+        color: #d97706;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .card-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* ===== Right Side Info Panel ===== */
+    .register-right {
+        max-width: 360px;
+        flex: 1;
+        min-width: 240px;
+    }
+
+    .register-right img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 20px;
+        border: 4px solid #ffe8c2;
+        display: block;
+        margin-bottom: 24px;
+    }
+
+    .info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        background: #fff;
+        border-radius: 14px;
+        border: 2px solid #f5f5f4;
+        padding: 14px 16px;
+    }
+
+    .info-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #fff7ed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .info-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .info-text h4 {
+        font-family: 'Syne', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: #1c1917;
+        margin-bottom: 2px;
+    }
+
+    .info-text p {
+        font-size: 12px;
+        color: #78716c;
+        line-height: 1.5;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 700px) {
+        .register-right { display: none; }
+        .register-card { padding: 28px 22px; }
+        .card-title { font-size: 22px; }
+    }
+</style>
+
+<div class="register-page">
+
+    <!-- Top Bar -->
+    <nav class="top-bar">
+        <a href="{{ url_for('index') }}" class="logo-text">Place<span class="logo-dot">●</span>Mate</a>
+    </nav>
+
+    <!-- Main Body -->
+    <div class="register-body">
+
+        <!-- Register Card -->
+        <div class="register-card">
+
+            <div class="card-badge">Free Account</div>
+            <div class="card-title">Create Account</div>
+            <div class="card-subtitle">Join PlaceMate and start your journey</div>
+
+            <!-- Register Form — method and field names unchanged -->
+            <form method="POST">
+
+                <div class="field-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="John Smith" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Choose a strong password" required>
+                </div>
+
+                <!-- Role Selector — same name="role" values preserved -->
+                <div class="field-group">
+                    <label>Select Your Role</label>
+                    <div class="role-selector">
+
+                        <div class="role-option">
+                            <input type="radio" id="role-student" name="role" value="student" required>
+                            <label for="role-student">
+                                <img src="https://img.icons8.com/ios-filled/50/d97706/student-male.png" alt="Student">
+                                Student
+                            </label>
+                        </div>
+
+                        <div class="role-option">
+                            <input type="radio" id="role-company" name="role" value="company">
+                            <label for="role-company">
+                                <img src="https://img.icons8.com/ios-filled/50/d97706/company.png" alt="Company">
+                                Company
+                            </label>
+                        </div>
+
+                        <div class="role-option">
+                            <input type="radio" id="role-admin" name="role" value="admin">
+                            <label for="role-admin">
+                                <img src="https://img.icons8.com/ios-filled/50/d97706/admin-settings-male.png" alt="Admin">
+                                Admin
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Create My Account</button>
+
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">Have an account?</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="card-footer">
+                Already registered?
+                <a href="{{ url_for('login') }}">Sign in here</a>
+            </div>
+
+        </div>
+
+        <!-- Right Side Info Panel -->
+        <div class="register-right">
+
+            <img
+                src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80"
+                alt="Students collaborating on campus"
+            >
+
+            <div class="info-list">
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <img src="https://img.icons8.com/ios-filled/50/d97706/lightning-bolt.png" alt="Fast">
+                    </div>
+                    <div class="info-text">
+                        <h4>Quick Setup</h4>
+                        <p>Get your account ready in under a minute. No credit card needed.</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <img src="https://img.icons8.com/ios-filled/50/d97706/briefcase.png" alt="Jobs">
+                    </div>
+                    <div class="info-text">
+                        <h4>300+ Job Listings</h4>
+                        <p>Access hundreds of real opportunities posted by top companies.</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <img src="https://img.icons8.com/ios-filled/50/d97706/security-checked.png" alt="Secure">
+                    </div>
+                    <div class="info-text">
+                        <h4>Safe & Secure</h4>
+                        <p>Your data is protected. We never share your info with third parties.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
