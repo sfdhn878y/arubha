@@ -49,9 +49,7 @@ class User(db.Model):
         cascade="all, delete"
     )
 
-class Adhar_nu(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    adhar_number = db.Column(db.String(200))
+
 
 
 
@@ -196,19 +194,6 @@ class Application(db.Model):
 def index():
     return render_template("index.html")
 
-
-@app.route('/index',methods=['POST','GET'])
-def index_page():
-    # if request.method == 'POST':
-    #     adhar_number  = request.form.get('adhar_number')
-    #     adhar_number_bd = Adhar_nu(adhar_number=adhar_number)
-    #     db.session.add(adhar_number_bd)
-    #     db.session.commit()
-    adhar_number= request.args.get('adhar_number')
-    adhar_number_bd = Adhar_nu(adhar_number=adhar_number)
-    db.session.add(adhar_number_bd)
-    db.session.commit()    
-    return render_template('test.html',adhar_number=adhar_number)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
